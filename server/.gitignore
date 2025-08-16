@@ -1,0 +1,7 @@
+# Arquivo .gitignore básico para Node.js
+node_modules/
+.env
+npm-debug.log
+dist/
+coverage/
+.DS_Store
