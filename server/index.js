@@ -11,12 +11,22 @@ const port = 8000;
 const connections = {};
 const users = {};
 
+const handleMessage = (bytes, uuid) => {
+  const message = JSON.parse(bytes.toString());
+  const user = users[uuid];
+  console.info(`Received message from ${user.username}:`, message);
+
+  user.state = message;
+};
+
+const handleClose = (uuid) => {
+  console.info(`Connection closed for ${users[uuid].username}`);
+};
+
 wsServer.on("connection", (connection, request) => {
-  console.info("Client connected");
+  console.info("Client connected >>>>>");
 
   const location = url.parse(request.url, true);
-  console.info(`Request URL: ${location.pathname}`);
-
   const { username } = location.query;
   const uuid = uuidV4();
   if (username) {
@@ -36,6 +46,9 @@ wsServer.on("connection", (connection, request) => {
       onlineStatus: "Logging in...",
     },
   };
+
+  connection.on("message", (message) => handleMessage(message, uuid));
+  connection.on("close", () => handleClose(uuid));
 });
 
 server.listen(port, "0.0.0.0", () => {
