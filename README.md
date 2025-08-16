@@ -1,48 +1,54 @@
-# Live Cursors App
+<p align="center">
+   <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
+   <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
+   <img src="https://img.shields.io/badge/WebSockets-4aa3f7?style=for-the-badge&logo=websockets&logoColor=white" />
+</p>
 
-Este projeto é um aplicativo de cursores em tempo real, inspirado no vídeo “[Build a Real-Time Live Cursors App with Ably](https://www.youtube.com/watch?v=4Uwq0xB30JE&ab_channel=AblyRealtime)”. Ele permite que múltiplos usuários vejam os movimentos dos cursores uns dos outros em tempo real, utilizando a plataforma Ably Realtime.
+# 🖱️ Live Cursors App
 
-## Funcionalidades
+This project is a real-time cursor sharing app inspired by the video “[Build a Real-Time Live Cursors App with Ably](https://www.youtube.com/watch?v=4Uwq0xB30JE&ab_channel=AblyRealtime)”. It allows multiple users to see each other's cursor movements in real time using the Ably Realtime platform.
 
-- Compartilhamento de posição do cursor em tempo real entre usuários
-- Interface web interativa
-- Backend Node.js para gerenciamento de conexões
-- Utilização do serviço Ably para comunicação em tempo real
+## ✨ Features
 
-## Tecnologias Utilizadas
+- Real-time cursor position sharing between users
+- Interactive web interface
+- Node.js backend for connection management
+- Uses Ably service for real-time communication
+
+## 🛠️ Technologies Used
 
 - Node.js
 - Ably Realtime
 - JavaScript/HTML/CSS (frontend)
 - WebSockets
 
-## Instalação
+## ⚡ Installation
 
-1. Clone o repositório:
+1. Clone the repository:
    ```bash
    git clone https://github.com/jonatasu/live-cursors-app.git
    cd live-cursors-app
    ```
-2. Instale as dependências do servidor:
+2. Install server dependencies:
    ```bash
    cd server
    npm install
    ```
-3. Configure sua chave da API do Ably em um arquivo `.env`:
+3. Set your Ably API key in a `.env` file:
    ```
    ABLY_API_KEY=your-ably-api-key
    ```
-4. Inicie o servidor:
+4. Start the server:
    ```bash
    node index.js
    ```
 
-## Como usar
+## 🚀 How to Use
 
-- Acesse a interface web do app (instruções de frontend podem ser adicionadas conforme o desenvolvimento).
-- Movimente o cursor e veja os cursores dos outros usuários em tempo real.
+- Access the app's web interface (frontend instructions will be added as development progresses).
+- Move your cursor and see other users' cursors in real time.
 
-## Referências
+## 📚 References
 
-- [Vídeo tutorial no YouTube](https://www.youtube.com/watch?v=4Uwq0xB30JE&ab_channel=AblyRealtime)
-- [Documentação Ably Realtime](https://ably.com/docs)
+- [YouTube Tutorial Video](https://www.youtube.com/watch?v=4Uwq0xB30JE&ab_channel=AblyRealtime)
+- [Ably Realtime Documentation](https://ably.com/docs)
