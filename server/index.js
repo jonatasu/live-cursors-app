@@ -11,16 +11,46 @@ const port = 8000;
 const connections = {};
 const users = {};
 
+const broadcastUsers = () => {
+  Object.keys(connections).forEach((uuid) => {
+    const connection = connections[uuid];
+    const user = users[uuid];
+
+    if (user) {
+      const message = JSON.stringify({
+        type: "userState",
+        uuid,
+        username: user.username,
+        state: user.state,
+      });
+      connection.send(message);
+    }
+  });
+};
+
 const handleMessage = (bytes, uuid) => {
   const message = JSON.parse(bytes.toString());
   const user = users[uuid];
   console.info(`Received message from ${user.username}:`, message);
 
   user.state = message;
+
+  broadcastUsers();
 };
 
 const handleClose = (uuid) => {
+  delete connections[uuid];
+  delete users[uuid];
   console.info(`Connection closed for ${users[uuid].username}`);
+  broadcastUsers();
+  console.info("Current connections:", Object.keys(connections).length);
+  console.info("Current users:", Object.keys(users).length);
+  console.info(
+    "Active users:",
+    Object.values(users)
+      .map((user) => user.username)
+      .join(",")
+  );
 };
 
 wsServer.on("connection", (connection, request) => {
@@ -40,11 +70,7 @@ wsServer.on("connection", (connection, request) => {
 
   users[uuid] = {
     username: username || `USER-${uuid.slice(0, 8)}`,
-    state: {
-      cursor: { x: 0, y: 0 },
-      typing: false,
-      onlineStatus: "Logging in...",
-    },
+    state: {},
   };
 
   connection.on("message", (message) => handleMessage(message, uuid));
