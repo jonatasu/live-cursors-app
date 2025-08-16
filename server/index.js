@@ -39,9 +39,9 @@ const handleMessage = (bytes, uuid) => {
 };
 
 const handleClose = (uuid) => {
+  console.info(`Connection closed for ${users[uuid].username}`);
   delete connections[uuid];
   delete users[uuid];
-  console.info(`Connection closed for ${users[uuid].username}`);
   broadcastUsers();
   console.info("Current connections:", Object.keys(connections).length);
   console.info("Current users:", Object.keys(users).length);
