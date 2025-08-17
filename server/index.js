@@ -12,18 +12,16 @@ const connections = {};
 const users = {};
 
 const broadcastUsers = () => {
+  // Send a single aggregated users map to every connected client.
+  // This ensures the client receives an object shaped as { <uuid>: { username, state }, ... }
+  const payload = JSON.stringify({ type: "users", users });
+
   Object.keys(connections).forEach((uuid) => {
     const connection = connections[uuid];
-    const user = users[uuid];
-
-    if (user) {
-      const message = JSON.stringify({
-        type: "userState",
-        uuid,
-        username: user.username,
-        state: user.state,
-      });
-      connection.send(message);
+    try {
+      connection.send(payload);
+    } catch (err) {
+      console.error("Failed to send users payload to", uuid, err);
     }
   });
 };
@@ -67,9 +65,10 @@ wsServer.on("connection", (connection, request) => {
   console.info(`UUID: ${uuid}`);
 
   connections[uuid] = connection;
+  console.log(`Connections: ${Object.keys(connections).join(", ")}`);
 
   users[uuid] = {
-    username: username || `USER-${uuid.slice(0, 8)}`,
+    username: username || `USER-${uuid.slice(0, 4)}`,
     state: {},
   };
 
