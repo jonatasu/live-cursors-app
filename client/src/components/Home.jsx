@@ -6,10 +6,13 @@ import { Cursor } from "./Cursor";
 
 const renderCursors = (users) => {
   return Object.keys(users).map((uuid) => {
-  const user = users[uuid];
-  const x = user?.state?.cursor?.x ?? 0;
-  const y = user?.state?.cursor?.y ?? 0;
-  return <Cursor key={uuid} userId={uuid} point={[x, y]} />;
+    const user = users[uuid];
+    // if cursor sent normalized coords (rx/ry), convert later in outer scope
+    const rx = user?.state?.cursor?.rx;
+    const ry = user?.state?.cursor?.ry;
+    const x = user?.state?.cursor?.x ?? null;
+    const y = user?.state?.cursor?.y ?? null;
+    return { uuid, rx, ry, x, y };
   });
 };
 
@@ -40,6 +43,8 @@ export default function Home({ username }) {
 
   const THROTTLE = 50;
   const sendJsonMessageThrottled = useRef(null);
+  const containerRef = useRef(null);
+  const [containerSize, setContainerSize] = useState({ width: window.innerWidth, height: window.innerHeight });
 
   // Ensure we always send a consistent message shape: { cursor: { x,y } }
   useEffect(() => {
@@ -48,15 +53,15 @@ export default function Home({ username }) {
       sendJsonMessage(payload);
     }, THROTTLE);
 
-    // initialize cursor to (0,0)
-    sendJsonMessage({ cursor: { x: 0, y: 0 } });
+    // initialize cursor to center (rx:0.5, ry:0.5)
+    sendJsonMessage({ cursor: { rx: 0.5, ry: 0.5 } });
 
     const onMove = (e) => {
       const { clientX, clientY } = e;
+      const rx = clientX / window.innerWidth;
+      const ry = clientY / window.innerHeight;
       if (sendJsonMessageThrottled.current)
-        sendJsonMessageThrottled.current({
-          cursor: { x: clientX, y: clientY },
-        });
+        sendJsonMessageThrottled.current({ cursor: { rx, ry } });
     };
 
     window.addEventListener("mousemove", onMove);
@@ -77,6 +82,8 @@ export default function Home({ username }) {
     // If server sends { type: 'users', users: { ... } }
     if (lastJsonMessage.type === "users" && lastJsonMessage.users) {
       setUsersMap(lastJsonMessage.users);
+      // update container size on full snapshot (in case client resized before snapshot)
+      setContainerSize({ width: window.innerWidth, height: window.innerHeight });
       return;
     }
 
@@ -105,6 +112,7 @@ export default function Home({ username }) {
   if (Object.keys(usersMap).length > 0) {
     return (
       <div
+        ref={containerRef}
         style={{
           position: "relative",
           width: "100vw",
@@ -113,7 +121,13 @@ export default function Home({ username }) {
         }}
       >
         {renderUsersList(usersMap)}
-        {renderCursors(usersMap)}
+        {renderCursors(usersMap)
+          .filter((r) => r && r.uuid !== myUuid)
+          .map((r) => {
+            const x = r.x != null ? r.x : (r.rx || 0) * containerSize.width;
+            const y = r.y != null ? r.y : (r.ry || 0) * containerSize.height;
+            return <Cursor key={r.uuid} userId={r.uuid} point={[x, y]} />;
+          })}
       </div>
     );
   }
