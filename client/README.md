@@ -2,14 +2,12 @@
 
 This folder contains the frontend for the Live Cursors demo. It's a small React app built with Vite.
 
-What it does
-------------
+## What it does
 
 - Connects to the WebSocket server and sends normalized cursor positions (rx/ry). 🛰️
 - Receives the aggregated users snapshot and renders remote cursors with smoothing/animation. 🧭
 
-Quick setup
------------
+## Quick setup
 
 From the repository root or from inside this folder:
 
@@ -21,23 +19,21 @@ npm run dev
 
 This will start a local development server (Vite). Open the URL printed by Vite (usually http://localhost:5173) in multiple browser windows/tabs to see cursor sharing between clients.
 
-Notes
------
+## Notes
 
 - The client depends on `react`, `react-dom`, `react-use-websocket`, `perfect-cursors`, and a few small utilities (see `package.json`). 📦
 - Cursor coordinates are normalized on the client (rx/ry) and converted to pixels according to the browser viewport when rendering. 📐
 - If you change the server host/port, update the `WS_URL` in `src/components/Home.jsx`. 🔧
 
-Troubleshooting
----------------
+## Troubleshooting
 
 - If cursors do not appear, ensure the server is running and reachable at `ws://localhost:8000` (default). 🔍
 - Check the browser console for WebSocket connection messages and errors. 🐞
 
-Security note
--------------
+## Security note
 
 This demo is intentionally minimal and does not include authentication or rate-limiting. Do not run it in production without proper hardening. ⚠️
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

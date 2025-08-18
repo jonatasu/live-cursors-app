@@ -6,14 +6,6 @@
    <img src="https://img.shields.io/badge/WebSockets-4aa3f7?style=for-the-badge&logo=websockets&logoColor=white" />
 </p>
 
-<p align="center">
-   <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
-   <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
-   <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black" />
-   <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" />
-   <img src="https://img.shields.io/badge/WebSockets-4aa3f7?style=for-the-badge&logo=websockets&logoColor=white" />
-</p>
-
 # 🖱️ Live Cursors App
 
 This repository contains a small real-time demo that shares cursor positions between connected users. It's a compact, self-contained project with a Node.js WebSocket server and a React + Vite frontend.
@@ -39,8 +31,7 @@ cd live-cursors-app
 
 Note: technical details and dependency instructions are kept in the `server/README.md` and `client/README.md` files.
 
-Reference and differences vs the Ably tutorial repo
--------------------------------------------------
+## Reference and differences vs the Ably tutorial repo
 
 This project was inspired by the Ably tutorial: https://github.com/ably-labs/react-websockets-tutorial/tree/master
 
