@@ -72,6 +72,16 @@ wsServer.on("connection", (connection, request) => {
     state: {},
   };
 
+  // Send assigned uuid to the newly connected client so it can identify itself
+  try {
+    connection.send(JSON.stringify({ type: "welcome", uuid }));
+  } catch (err) {
+    console.warn("Failed to send welcome message to", uuid, err);
+  }
+
+  // Immediately broadcast the full users map so the new client gets the current snapshot
+  broadcastUsers();
+
   connection.on("message", (message) => handleMessage(message, uuid));
   connection.on("close", () => handleClose(uuid));
 });
