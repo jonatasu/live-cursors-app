@@ -1,3 +1,4 @@
+import * as React from "react";
 import { PerfectCursor } from "perfect-cursors";
 
 export function usePerfectCursor(cb, point) {

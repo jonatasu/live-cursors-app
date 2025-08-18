@@ -1,13 +1,13 @@
 import { useState } from "react";
 // import './App.css'
 import Login from "./components/Login";
-import Home from "./Home";
+import Home from "./components/Home";
 import ErrorBoundary from "./components/ErrorBoundary";
 
 function App() {
   const [username, setUsername] = useState("");
 
-  const handleSubmit = ({ username }) => {
+  const handleSubmit = (username) => {
     if (username) {
       setUsername(username);
     }

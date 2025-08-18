@@ -2,12 +2,11 @@ import { useState } from "react";
 
 export default function Login({ onSubmit }) {
   const [username, setUsername] = useState("");
-  // const [password, setPassword] = useState('')
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitting login with username:", username);
-    onSubmit({ username });
+    onSubmit(username);
+    console.log("🚀 ~ handleSubmit ~ username:", username);
   };
 
   return (
@@ -22,13 +21,6 @@ export default function Login({ onSubmit }) {
           placeholder="Username"
           required
         />
-        {/* <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          required
-        /> */}
         <button type="submit">Login</button>
       </form>
     </>

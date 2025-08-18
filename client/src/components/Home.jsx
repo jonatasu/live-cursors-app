@@ -1,6 +1,6 @@
 import ErrorBoundary from "./ErrorBoundary";
 import useWebSocket from "react-use-websocket";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import throttle from "lodash.throttle";
 import { Cursor } from "./Cursor";
 
@@ -44,7 +44,10 @@ export default function Home({ username }) {
   const THROTTLE = 50;
   const sendJsonMessageThrottled = useRef(null);
   const containerRef = useRef(null);
-  const [containerSize, setContainerSize] = useState({ width: window.innerWidth, height: window.innerHeight });
+  const [containerSize, setContainerSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
 
   // Ensure we always send a consistent message shape: { cursor: { x,y } }
   useEffect(() => {
@@ -65,6 +68,7 @@ export default function Home({ username }) {
     };
 
     window.addEventListener("mousemove", onMove);
+
     return () => {
       window.removeEventListener("mousemove", onMove);
       if (
@@ -83,7 +87,10 @@ export default function Home({ username }) {
     if (lastJsonMessage.type === "users" && lastJsonMessage.users) {
       setUsersMap(lastJsonMessage.users);
       // update container size on full snapshot (in case client resized before snapshot)
-      setContainerSize({ width: window.innerWidth, height: window.innerHeight });
+      setContainerSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
       return;
     }
 
